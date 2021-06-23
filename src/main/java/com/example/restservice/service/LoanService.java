@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.restservice.exception.InvalidLoanException;
 import com.example.restservice.exception.NoRecordFoundException;
+import com.example.restservice.metrics.ILoanMetricCalculator;
 import com.example.restservice.metrics.LoanMetricFactory;
 import com.example.restservice.model.Loan;
 import com.example.restservice.model.LoanData;
@@ -46,16 +48,20 @@ public class LoanService {
 	 * @param loan
 	 * @return
 	 */
-	public LoanMetric calculateLoanMetric(Loan loan) {
+	public LoanMetric calculateLoanMetric(Loan loan) throws InvalidLoanException{
 		
 		if(loan.getLoanId() != null && loan.getLoanId() < 1) {
 			throw new NoRecordFoundException();
 		}
 		
 		// Use the LoanMetricFactory based on the loan type
-		LoanMetric loanMetric = loanMetricFactory.getInstance(loan).getLoanMetric(loan);
-
-		return loanMetric;
+		ILoanMetricCalculator loanMetric = loanMetricFactory.getInstance(loan);
+		
+		if(!loanMetric.isSupported(loan)) {
+			throw new InvalidLoanException();
+		}
+		
+		return loanMetric.getLoanMetric(loan);
 	}
 
 	/**

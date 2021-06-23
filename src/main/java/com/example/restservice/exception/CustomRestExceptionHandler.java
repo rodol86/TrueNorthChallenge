@@ -33,4 +33,15 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
     public void springHandleNoLoanIdException(HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.BAD_REQUEST.value());
     }
+	
+	/**
+	 * Customer not eligible for a Loan
+	 * @param response
+	 * @throws IOException
+	 */
+	@ExceptionHandler(InvalidLoanException.class)
+    public void springHandleInvalidLoanException(HttpServletResponse response) throws IOException {
+        response.sendError(HttpStatus.BAD_REQUEST.value());
+    }
+	
 }
