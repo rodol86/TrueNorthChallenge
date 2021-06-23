@@ -6,3 +6,4 @@ target/
 .mvn/wrapper/maven-wrapper.properties
 .project
 .settings
+/bin/

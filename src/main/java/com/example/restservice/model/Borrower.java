@@ -1,12 +1,33 @@
 package com.example.restservice.model;
 
-public class Borrower {
+import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+@SuppressWarnings("serial")
+@Embeddable
+public class Borrower implements Serializable{
+
+	@Column
 	private String name;
+	
+	@Column
 	private Integer age;
+	
+	@Column
 	private Double annualIncome;
+	
+	@Column
 	private Boolean delinquentDebt;
+	
+	@Column
 	private Double annualDebt;
+	
+	@Column
 	private Integer creditHistory;
 
 	public String getName() {
@@ -57,4 +78,8 @@ public class Borrower {
 		this.creditHistory = creditHistory;
 	}
 
+	   public String toString() {
+	        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	        return gson.toJson(this);
+	    }
 }

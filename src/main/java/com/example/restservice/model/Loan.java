@@ -1,12 +1,36 @@
 package com.example.restservice.model;
 
-public class Loan {
+import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+@SuppressWarnings("serial")
+@Entity
+@Table
+public class Loan implements Serializable {
+
+	@Id
 	private Long loanId;
+	
+	@Column
 	private Double requestedAmount;
+	
+	@Column
 	private Integer termMonths;
+	
+	@Column
 	private Double annualInterest;
+	
+	@Column
 	private String type;
+	
+	@Embedded
 	private Borrower borrower;
 
 	public Long getLoanId() {
@@ -55,6 +79,11 @@ public class Loan {
 
 	public void setBorrower(Borrower borrower) {
 		this.borrower = borrower;
+	}
+	
+	public String toString() {
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		return gson.toJson(this);
 	}
 
 }
