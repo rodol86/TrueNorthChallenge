@@ -1,2 +1,2 @@
 #!/bin/sh
-java -jar target/rest-service-0.0.1-SNAPSHOT.jar
+java -jar rest-service-0.0.1-SNAPSHOT.jar
